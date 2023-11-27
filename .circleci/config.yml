@@ -12,6 +12,7 @@ jobs:
     steps:
       - checkout:
           path: ~/testing-task
+      - run: sudo apt-get update
       - browser-tools/install-browser-tools:
           chrome-version: 114.0.5735.90
       - run:
