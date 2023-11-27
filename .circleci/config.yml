@@ -6,7 +6,7 @@ orbs:
  
 jobs:
   run-ui-tests:
-    working-directory: ~/testing-task/UI-testing
+    working-directory: ~/testing-task/tree/main/UI-testing
     docker:
       - image: cimg/node:lts-browsers
     steps:
@@ -26,7 +26,4 @@ jobs:
 workflows:
   testing-workflow:
     jobs:
-      - run-ui-tests:
-          filters:
-            branches:
-              only: main
+      - run-ui-tests
