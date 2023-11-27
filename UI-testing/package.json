@@ -1,0 +1,19 @@
+{
+  "name": "testing-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nightwatch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "chromedriver": "^119.0.1",
+    "mocha": "^10.2.0",
+    "nightwatch": "^3.3.2",
+    "supertest": "^6.3.3"
+  }
+}
