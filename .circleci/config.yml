@@ -2,31 +2,31 @@ version: 2.1
 
 orbs: 
   node: circleci/node@4.7
-  browser-tools: circleci/browser-tools@1.1.0 
-  jobs:
-    run-ui-tests:
-      working-directory: ~/testing-task/UI-testing
-      docker:
-        - image: cimg/node:lts-browsers
-      steps:
-        - checkout
-        - browser-tools/install-browser-tools 
-        - node/install-packages
-        - run:
-            name: install npm dependancies
-            command:
-              npm install --save
-        - run:
-            name: run ui tests
-            command:
-              npm run test
-        - store_test_results: 
-            path: /tests_output
+  browser-tools: circleci/browser-tools@1.1.0
+ 
+jobs:
+  run-ui-tests:
+    working-directory: ~/testing-task/UI-testing
+    docker:
+      - image: cimg/node:lts-browsers
+    steps:
+      - checkout
+      - browser-tools/install-browser-tools 
+      - run:
+          name: install npm dependancies
+          command:
+            npm install --save
+      - run:
+          name: run ui tests
+          command:
+            npm run test
+      - store_test_results: 
+          path: /tests_output
 
-  workflows:
-    testing-workflow:
-      jobs:
-        - run-ui-tests:
-            filters:
-              branches:
-                only: main
+workflows:
+  testing-workflow:
+    jobs:
+      - run-ui-tests:
+          filters:
+            branches:
+              only: main
