@@ -23,10 +23,10 @@ orbs:
         - store_test_results: 
             path: /tests_output
 
-workflows:
-  testing-workflow:
-    jobs:
-      - run-ui-tests:
-          filters:
-            branches:
-              only: main
+  workflows:
+    testing-workflow:
+      jobs:
+        - run-ui-tests:
+            filters:
+              branches:
+                only: main
