@@ -16,7 +16,7 @@ jobs:
       - run:
           name: install npm dependancies
           command:
-            npm install --save
+            npm install
       - run:
           name: run ui tests
           command:
