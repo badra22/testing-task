@@ -79,7 +79,8 @@ module.exports = {
 
       webdriver: {
         start_process: true,
-        server_path: '',
+        server_path: '~/testing-task/UI-testing/node_modules/chromedriver/lib/chromedriver/chromedriver.exe',
+        port: 9515,
         cli_args: [
           // --verbose
         ]
