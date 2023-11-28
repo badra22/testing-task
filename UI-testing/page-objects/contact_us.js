@@ -1,5 +1,18 @@
+const formCommands = {
+
+    setSubjectHeadingOption: function (value) {
+        if(value < 3){
+            return this.getText(`@subjectHeading.option[value="${value}"]`, function (result) {
+                return this.setText('@subjectHeading', result.value);
+            });
+        }
+        return this.setText('@subjectHeading', 0);
+    }
+}
+
 module.exports = {
     url: 'http://automationpractice.multiformis.com/index.php?controller=contact',
+    commands: [formCommands],
     elements: {
         form: {
             selector: 'form'
@@ -22,9 +35,17 @@ module.exports = {
         message: {
             selector: '#message'
         },
-
+        errorPanel: {
+            selector: '.alert-danger'
+        },
+        errorText: {
+            selector: '.alert-danger.ol.li'
+        },
+        successPanel: {
+            selector: '.alert-success'
+        },
         submitButton: {
-            selector: 'input[name="contactKey"]'
+            selector: 'button[name="submitMessage"]'
         }
     }
 }
