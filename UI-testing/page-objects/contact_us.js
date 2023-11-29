@@ -1,12 +1,15 @@
 const formCommands = {
 
-    setSubjectHeadingOption: function (value) {
+    select_subject_heading: function (value) {
         if(value < 3){
-            return this.getText(`@subjectHeading.option[value="${value}"]`, function (result) {
-                return this.setText('@subjectHeading', result.value);
-            });
+            return this.click('@subjectHeading').click(`#id_contact option[value="${value}"]`)
         }
-        return this.setText('@subjectHeading', 0);
+        return this
+    },
+
+    upload_file: function (dir) {
+        return this.waitForElementPresent('@attachedFile')
+                    .uploadFile('@attachedFile', require('path').resolve(__dirname + dir))
     }
 }
 
@@ -20,7 +23,7 @@ module.exports = {
         subjectHeading: {
             selector: '#id_contact'
         },
-        Email: {
+        email: {
             selector: '#email'
         },
         orderRef: {
@@ -39,7 +42,7 @@ module.exports = {
             selector: '.alert-danger'
         },
         errorText: {
-            selector: '.alert-danger.ol.li'
+            selector: '.alert-danger ol li'
         },
         successPanel: {
             selector: '.alert-success'
