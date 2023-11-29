@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./node_modules/mock-user-auth/bin/www.js",
-    "test": "supertest"
+    "test": "mocha tests/*js && mocha --reporter json > reports/test_results.json"
   },
   "keywords": [],
   "author": "",

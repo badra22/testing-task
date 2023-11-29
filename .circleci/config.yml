@@ -19,13 +19,6 @@ jobs:
           command: |
             google-chrome --version
             chromedriver --version
-      # - run:
-      #     name: Fix PATH
-      #     command: |
-      #       echo "see https://github.com/CircleCI-Public/browser-tools-orb/blob/de5fa4e28909039438189815dbb42ac308e49bc9/src/scripts/install-chromedriver.sh#L187"
-      #       echo "export PATH='/usr/local/bin/chromedriver:$PATH'" >> $BASH_ENV
-      # - browser-tools/install-browser-tools:
-          # chrome-version: 114.0.5735.90
       - run:
           name: install npm dependancies
           command:
@@ -37,7 +30,32 @@ jobs:
       - store_test_results: 
           path: /tests_output
 
+  run-api-tests:
+    working_directory: ~/testing-task/API-testing
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout:
+          path: ~/testing-task
+      - run:
+          name: install npm dependencies
+          command:
+            npm install
+      - run:
+          name: start mock-user-auth server
+          command: npm run dev
+          background: true
+      - run:
+          name: run tests
+          command: npm run test
+      - run:
+          name: stop mock-user-auth server
+          command: npm stop
+      - store_test_results: 
+          path: /tests_output
+
 workflows:
   testing-workflow:
     jobs:
       - run-ui-tests
+      - run-api-tests
