@@ -33,7 +33,7 @@ jobs:
   run-api-tests:
     working_directory: ~/testing-task/API-testing
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:21.2.0
     steps:
       - checkout:
           path: ~/testing-task
