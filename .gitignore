@@ -1,3 +1,4 @@
 UI-testing/node_modules
 UI-testing/tests_output
 UI-testing/*.log
+API-testing/node_modules

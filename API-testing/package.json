@@ -1,0 +1,19 @@
+{
+  "name": "testing-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./node_modules/mock-user-auth/bin/www.js",
+    "test": "supertest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "mock-user-auth": "^1.0.15",
+    "supertest": "^6.3.3"
+  }
+}
