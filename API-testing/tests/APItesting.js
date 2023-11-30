@@ -2,7 +2,7 @@ const request = require('supertest');
 const expect = require('chai').expect;
 
 describe('mock-user-auth API tests', () => {
-    const baseurl = 'http://localhost:3000/api/v1';
+    const baseurl = 'http://41.44.4.142:3000/api/v1';
     let token;
     let usr_id;
     let usr_name = 'user';
