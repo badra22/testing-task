@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./node_modules/mock-user-auth/bin/www.js",
-    "test": "mocha tests/*js && mocha --reporter json > reports/test_results.json"
+    "test": "mocha tests/*js --reporter mocha-simple-html-reporter --reporter-options output=report.html"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +13,7 @@
   "devDependencies": {
     "chai": "^4.3.10",
     "mocha": "^10.2.0",
+    "mocha-simple-html-reporter": "^2.0.0",
     "mock-user-auth": "^1.0.15",
     "supertest": "^6.3.3"
   }

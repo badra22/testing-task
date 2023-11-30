@@ -1,0 +1,927 @@
+
+<html>
+    <head>
+        <title>Mocha</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style type="text/css">
+        @charset "utf-8";
+
+:root {
+  --mocha-color: #000;
+  --mocha-bg-color: #fff;
+  --mocha-pass-icon-color: #00d6b2;
+  --mocha-pass-color: #fff;
+  --mocha-pass-shadow-color: rgba(0,0,0,.2);
+  --mocha-pass-mediump-color: #c09853;
+  --mocha-pass-slow-color: #b94a48;
+  --mocha-test-pending-color: #0b97c4;
+  --mocha-test-pending-icon-color: #0b97c4;
+  --mocha-test-fail-color: #c00;
+  --mocha-test-fail-icon-color: #c00;
+  --mocha-test-fail-pre-color: #000;
+  --mocha-test-fail-pre-error-color: #c00;
+  --mocha-test-html-error-color: #000;
+  --mocha-box-shadow-color: #eee;
+  --mocha-box-bottom-color: #ddd;
+  --mocha-test-replay-color: #000;
+  --mocha-test-replay-bg-color: #eee;
+  --mocha-stats-color: #888;
+  --mocha-stats-em-color: #000;
+  --mocha-stats-hover-color: #eee;
+  --mocha-error-color: #c00;
+
+  --mocha-code-comment:  #ddd;
+  --mocha-code-init: #2f6fad;
+  --mocha-code-string: #5890ad;
+  --mocha-code-keyword: #8a6343;
+  --mocha-code-number: #2f6fad;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+     --mocha-color: #fff;
+     --mocha-bg-color: #222;
+     --mocha-pass-icon-color: #00d6b2;
+     --mocha-pass-color: #222;
+     --mocha-pass-shadow-color: rgba(255,255,255,.2);
+     --mocha-pass-mediump-color: #f1be67;
+     --mocha-pass-slow-color: #f49896;
+     --mocha-test-pending-color: #0b97c4;
+     --mocha-test-pending-icon-color: #0b97c4;
+     --mocha-test-fail-color: #f44;
+     --mocha-test-fail-icon-color: #f44;
+     --mocha-test-fail-pre-color: #fff;
+     --mocha-test-fail-pre-error-color: #f44;
+     --mocha-test-html-error-color: #fff;
+     --mocha-box-shadow-color: #444;
+     --mocha-box-bottom-color: #555;
+     --mocha-test-replay-color: #fff;
+     --mocha-test-replay-bg-color: #444;
+     --mocha-stats-color: #aaa;
+     --mocha-stats-em-color: #fff;
+     --mocha-stats-hover-color: #444;
+     --mocha-error-color: #f44;
+
+     --mocha-code-comment: #ddd;
+     --mocha-code-init: #9cc7f1;
+     --mocha-code-string: #80d4ff;
+     --mocha-code-keyword: #e3a470;
+     --mocha-code-number: #4ca7ff;
+  }
+}
+
+body {
+  margin:0;
+  background-color: var(--mocha-bg-color);
+  color: var(--mocha-color);
+}
+
+#mocha {
+  font: 20px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 60px 50px;
+}
+
+#mocha ul,
+#mocha li {
+  margin: 0;
+  padding: 0;
+}
+
+#mocha ul {
+  list-style: none;
+}
+
+#mocha h1,
+#mocha h2 {
+  margin: 0;
+}
+
+#mocha h1 {
+  margin-top: 15px;
+  font-size: 1em;
+  font-weight: 200;
+}
+
+#mocha h1 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#mocha h1 a:hover {
+  text-decoration: underline;
+}
+
+#mocha .suite .suite h1 {
+  margin-top: 0;
+  font-size: .8em;
+}
+
+#mocha .hidden {
+  display: none;
+}
+
+#mocha h2 {
+  font-size: 12px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+#mocha .suite {
+  margin-left: 15px;
+}
+
+#mocha .test {
+  margin-left: 15px;
+  overflow: hidden;
+}
+
+#mocha .test.pending:hover h2::after {
+  content: '(pending)';
+  font-family: arial, sans-serif;
+}
+
+#mocha .test.pass.medium .duration {
+  background: var(--mocha-pass-mediump-color);
+}
+
+#mocha .test.pass.slow .duration {
+  background: var(--mocha-pass-slow-color);
+}
+
+#mocha .test.pass::before {
+  content: '✓';
+  font-size: 12px;
+  display: block;
+  float: left;
+  margin-right: 5px;
+  color: var(--mocha-pass-icon-color);
+}
+
+#mocha .test.pass .duration {
+  font-size: 9px;
+  margin-left: 5px;
+  padding: 2px 5px;
+  color: var(--mocha-pass-color);
+  -webkit-box-shadow: inset 0 1px 1px var(--mocha-pass-shadow-color);
+  -moz-box-shadow: inset 0 1px 1px var(--mocha-pass-shadow-color);
+  box-shadow: inset 0 1px 1px var(--mocha-pass-shadow-color);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#mocha .test.pass.fast .duration {
+  display: none;
+}
+
+#mocha .test.pending {
+  color: var(--mocha-test-pending-color);
+}
+
+#mocha .test.pending::before {
+  content: '◦';
+  color: var(--mocha-test-pending-icon-color);
+}
+
+#mocha .test.fail {
+  color: var(--mocha-test-fail-color);
+}
+
+#mocha .test.fail pre {
+  color: var(--mocha-test-fail-pre-color);
+}
+
+#mocha .test.fail::before {
+  content: '✖';
+  font-size: 12px;
+  display: block;
+  float: left;
+  margin-right: 5px;
+  color: var(--mocha-test-fail-icon-color);
+}
+
+#mocha .test pre.error {
+  color: var(--mocha-test-fail-pre-error-color);
+  max-height: 300px;
+  overflow: auto;
+}
+
+#mocha .test .html-error {
+  overflow: auto;
+  color: var(--mocha-test-html-error-color);
+  display: block;
+  float: left;
+  clear: left;
+  font: 12px/1.5 monaco, monospace;
+  margin: 5px;
+  padding: 15px;
+  border: 1px solid var(--mocha-box-shadow-color);
+  max-width: 85%; /*(1)*/
+  max-width: -webkit-calc(100% - 42px);
+  max-width: -moz-calc(100% - 42px);
+  max-width: calc(100% - 42px); /*(2)*/
+  max-height: 300px;
+  word-wrap: break-word;
+  border-bottom-color: var(--mocha-box-bottom-color);
+  -webkit-box-shadow: 0 1px 3px var(--mocha-box-shadow-color);
+  -moz-box-shadow: 0 1px 3px var(--mocha-box-shadow-color);
+  box-shadow: 0 1px 3px var(--mocha-box-shadow-color);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#mocha .test .html-error pre.error {
+  border: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: 0;
+  -moz-box-shadow: 0;
+  box-shadow: 0;
+  padding: 0;
+  margin: 0;
+  margin-top: 18px;
+  max-height: none;
+}
+
+/**
+ * (1): approximate for browsers not supporting calc
+ * (2): 42 = 2*15 + 2*10 + 2*1 (padding + margin + border)
+ *      ^^ seriously
+ */
+#mocha .test pre {
+  display: block;
+  float: left;
+  clear: left;
+  font: 12px/1.5 monaco, monospace;
+  margin: 5px;
+  padding: 15px;
+  border: 1px solid var(--mocha-box-shadow-color);
+  max-width: 85%; /*(1)*/
+  max-width: -webkit-calc(100% - 42px);
+  max-width: -moz-calc(100% - 42px);
+  max-width: calc(100% - 42px); /*(2)*/
+  word-wrap: break-word;
+  border-bottom-color: var(--mocha-box-bottom-color);
+  -webkit-box-shadow: 0 1px 3px var(--mocha-box-shadow-color);
+  -moz-box-shadow: 0 1px 3px var(--mocha-box-shadow-color);
+  box-shadow: 0 1px 3px var(--mocha-box-shadow-color);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#mocha .test h2 {
+  position: relative;
+}
+
+#mocha .test a.replay {
+  position: absolute;
+  top: 3px;
+  right: 0;
+  text-decoration: none;
+  vertical-align: middle;
+  display: block;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  text-align: center;
+  background: var(--mocha-test-replay-bg-color);
+  font-size: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-transition:opacity 200ms;
+  -moz-transition:opacity 200ms;
+  -o-transition:opacity 200ms;
+  transition: opacity 200ms;
+  opacity: 0.7;
+  color: var(--mocha-test-replay-color);
+}
+
+#mocha .test:hover a.replay {
+  box-shadow: 0 0 1px inset var(--mocha-test-replay-color);
+  opacity: 1;
+}
+
+#mocha-report.pass .test.fail {
+  display: none;
+}
+
+#mocha-report.fail .test.pass {
+  display: none;
+}
+
+#mocha-report.pending .test.pass,
+#mocha-report.pending .test.fail {
+  display: none;
+}
+#mocha-report.pending .test.pass.pending {
+  display: block;
+}
+
+#mocha-error {
+  color: var(--mocha-error-color);
+  font-size: 1.5em;
+  font-weight: 100;
+  letter-spacing: 1px;
+}
+
+#mocha-stats {
+  position: fixed;
+  top: 15px;
+  right: 10px;
+  font-size: 12px;
+  margin: 0;
+  color: var(--mocha-stats-color);
+  z-index: 1;
+}
+
+#mocha-stats .progress {
+  float: right;
+  padding-top: 0;
+
+  /**
+   * Set safe initial values, so mochas .progress does not inherit these
+   * properties from Bootstrap .progress (which causes .progress height to
+   * equal line height set in Bootstrap).
+   */
+  height: auto;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background-color: initial;
+}
+
+#mocha-stats em {
+  color: var(--mocha-stats-em-color);
+}
+
+#mocha-stats a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#mocha-stats a:hover {
+  border-bottom: 1px solid var(--mocha-stats-hover-color);
+}
+
+#mocha-stats li {
+  display: inline-block;
+  margin: 0 5px;
+  list-style: none;
+  padding-top: 11px;
+}
+
+#mocha-stats canvas {
+  width: 40px;
+  height: 40px;
+}
+
+#mocha code .comment { color: var(--mocha-code-comment); }
+#mocha code .init { color: var(--mocha-code-init); }
+#mocha code .string { color: var(--mocha-code-string); }
+#mocha code .keyword { color: var(--mocha-code-keyword); }
+#mocha code .number { color: var(--mocha-code-number); }
+
+@media screen and (max-device-width: 480px) {
+  #mocha {
+    margin: 60px 0px;
+  }
+
+  #mocha #stats {
+    position: absolute;
+  }
+}
+#mocha .test.pass pre {
+    display: none;
+}
+
+#mocha .test.fail pre {
+    display: none;
+}
+
+#mocha .test pre.error {
+    display: block;
+}
+
+#mocha .test .html-error pre.error {
+    box-shadow: none;
+}
+
+#mocha .test:hover h2:after {
+    color: #888888;
+    content: "(view source)";
+    font-family: arial;
+    font-size: 12px;
+    position: relative;
+    right: -10px;
+    top: 0;
+}
+
+#mocha .test.pass.pending h2 {
+    cursor: auto;
+}
+
+#mocha .mocha-header {
+    right: 30px;
+    position: fixed;
+    top: 15px;
+    font-size: 14px;
+    margin: 0;
+    color: #888;
+    z-index: 1;
+}
+
+#mocha .mocha-header em {
+    font-style: normal;
+    color: black;
+}
+
+#mocha .mocha-header ul {
+    display: inline-block;
+}
+
+#mocha .mocha-stats li {
+    display: inline-block;
+    margin: 0 5px;
+    list-style: none;
+    padding-top: 11px;
+}
+
+#mocha .mocha-menu {
+    margin-right: 10px;
+}
+
+#mocha .mocha-menu li {
+    display: inline-block;
+    margin-left: 10px;
+    list-style: none;
+}
+
+#mocha .mocha-menu li span {
+    display: inline-block;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    padding: 3px 7px 2px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,.2);
+    border-radius: 5px;
+    user-select: none;
+}
+
+#mocha .mocha-menu li span.checked {
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,.2);
+}
+
+#mocha .toggle-passes {
+    background: #b94a48;
+}
+
+        </style>
+    </head>
+    <body>
+        <div id="mocha">
+            <div class="mocha-header">
+                <ul class="mocha-menu">
+                    <li><span id="toggle-passes" class="toggle-passes">show failures only</span></li>
+                </ul>
+                <ul class="mocha-stats">
+                    <li class="passes">passes: <em>21</em></li>
+                    <li class="pending">pending: <em>0</em></li>
+                    <li class="failures">failures: <em>3</em></li>
+                    <li class="duration">duration: <em>123ms</em></li>
+                </ul>
+            </div>
+            <ul id="report"><li class="suite"><h1>mock-user-auth API tests</h1><ul><li class="test pass fast"><h2>should create new user successfully in case of valid credentials<span class="duration">34ms</span></h2><pre><code>request(baseurl)
+    .post(&#x27;/users&#x27;)
+    .send({
+        name: usr_name,
+        email: usr_email,
+        password: usr_password
+    })
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.body).not.to.be.null;
+        expect(res.body.message).to.be.equal(&#x22;User registered with success&#x22;);
+        expect(res.body.token).not.to.be.null;
+        token = res.body.token;
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should not create same user twice<span class="duration">5ms</span></h2><pre><code>request(baseurl)
+    .post(&#x27;/users&#x27;)
+    .send({
+        name: usr_name,
+        email: usr_email,
+        password: usr_password
+    })
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).not.to.be.equal(200);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should fail to authenticate non-existing users<span class="duration">4ms</span></h2><pre><code>let usr2_email = &#x27;ahmed.mohamed@gmail.com&#x27;
+let usr2_password = &#x27;123456&#x27;
+request(baseurl)
+    .post(&#x27;/auth&#x27;)
+    .send({
+        email: usr2_email,
+        password: usr2_password
+    })
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).not.to.be.equal(200);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should fail to authenticate existing users using incomplete credentials<span class="duration">3ms</span></h2><pre><code>let usr2_email = &#x27;ahmed.mohamed@gmail.com&#x27;
+request(baseurl)
+    .post(&#x27;/auth&#x27;)
+    .send({
+        email: usr2_email
+    })
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).not.to.be.equal(200);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should authenticate existing user successfully<span class="duration">3ms</span></h2><pre><code>request(baseurl)
+    .post(&#x27;/auth&#x27;)
+    .send({
+        email: usr_email,
+        password: usr_password
+    })
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.body).not.to.be.null;
+        expect(res.body.token).not.to.be.null;
+        token = res.body.token;
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should get currently authenticated user info successfully and correctly<span class="duration">4ms</span></h2><pre><code>request(baseurl)
+    .get(&#x27;/users&#x27;)
+    .set(&#x27;Authorization&#x27;, token)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.body).not.to.be.null;
+        expect(res.body.id).not.to.be.null;
+        expect(res.body.name).to.be.equal(usr_name);
+        expect(res.body.email).to.be.equal(usr_email);
+        usr_id = res.body.id;
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test fail"><h2>should get currently authenticated user hashed password instead of the real password</h2><pre><code>request(baseurl)
+    .get(&#x27;/users&#x27;)
+    .set(&#x27;Authorization&#x27;, token)            
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.body).not.to.be.null;
+        expect(res.body.password).not.to.be.equal(usr_password);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre><pre class="error">AssertionError: expected &#x27;user123&#x27; to not equal &#x27;user123&#x27;
+    at Test.&#x3C;anonymous&#x3E; (tests/APItesting.js:145:53)
+    at Test.assert (node_modules/supertest/lib/test.js:172:8)
+    at localAssert (node_modules/supertest/lib/test.js:120:14)
+    at /home/badra022/Desktop/Siemens software diploma/testing-task/API-testing/node_modules/supertest/lib/test.js:125:7
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /home/badra022/Desktop/Siemens software diploma/testing-task/API-testing/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.&#x3C;anonymous&#x3E; (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:526:35)
+    at endReadableNT (node:internal/streams/readable:1359:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)</pre></li><li class="test pass fast"><h2>should fail to get user info with invalid authorization<span class="duration">2ms</span></h2><pre><code>request(baseurl)
+    .get(&#x27;/users&#x27;)
+    .set(&#x27;Authorization&#x27;, &#x27;&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).to.be.equal(403);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should fail to get user info with missing authorization<span class="duration">4ms</span></h2><pre><code>request(baseurl)
+    .get(&#x27;/users&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).to.be.equal(403);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should update currently authenticated user info successfully in case of valid authorization<span class="duration">5ms</span></h2><pre><code>usr_name = &#x22;newName&#x22;;
+usr_email = &#x22;new_email@gmail.com&#x22;;
+usr_password = &#x22;newpassword123&#x22;;
+request(baseurl)
+    .patch(&#x27;/users&#x27;)
+    .send({
+        name: usr_name,
+        email: usr_email,
+        password: usr_password
+    })
+    .set(&#x27;Authorization&#x27;, token)    
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.body).not.to.be.null;
+        expect(res.body.message).to.be.equal(&#x22;User updated with success!&#x22;);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should fail to update currently authenticated user info in case of invalid authorization<span class="duration">3ms</span></h2><pre><code>request(baseurl)
+    .patch(&#x27;/users&#x27;)
+    .send({
+        name: usr_name,
+        email: usr_email,
+        password: usr_password
+    })
+    .set(&#x27;Authorization&#x27;, token)    
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).to.be.equal(403);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should fail to update currently authenticated user info in case of incomplete info<span class="duration">4ms</span></h2><pre><code>request(baseurl)
+    .patch(&#x27;/users&#x27;)
+    .send({
+        name: usr_name,
+    })
+    .set(&#x27;Authorization&#x27;, token)    
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).not.to.be.equal(200);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should require reAuthentication after updating user info<span class="duration">4ms</span></h2><pre><code>request(baseurl)
+    .get(&#x27;/users&#x27;)
+    .set(&#x27;Authorization&#x27;, token)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).to.be.equal(403);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should get the latest updated info of currently authenticated user correctly, not the outdated info<span class="duration">5ms</span></h2><pre><code>// reAuthenticate the user
+request(baseurl)
+    .post(&#x27;/auth&#x27;)
+    .send({
+        email: usr_email,
+        password: usr_password
+    })
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        token = res.body.token;
+        // Get and validate user data
+        request(baseurl)
+            .get(&#x27;/users&#x27;)
+            .set(&#x27;Authorization&#x27;, token)
+            .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+            .end(function(err, res) {
+                expect(res.statusCode).to.be.equal(200);
+                expect(res.body).not.to.be.null;
+                expect(res.body.id).not.to.be.null;
+                expect(res.body.id).to.be.equal(usr_id);
+                expect(res.body.name).to.be.equal(usr_name);
+                expect(res.body.email).to.be.equal(usr_email);
+                expect(res.body.password).to.be.equal(usr_password);
+                if(err){
+                    throw err;
+                }
+                done();
+            });
+    });</code></pre></li><li class="test pass fast"><h2>should fail to delete user with invalid authorization<span class="duration">3ms</span></h2><pre><code>request(baseurl)
+    .delete(&#x27;/users&#x27;)
+    .set(&#x27;Authorization&#x27;, &#x27;&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).not.to.be.equal(200);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should fail to delete user with missing authorization<span class="duration">3ms</span></h2><pre><code>request(baseurl)
+    .delete(&#x27;/users&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).not.to.be.equal(200);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should fail to delete all users using invalid admin key<span class="duration">2ms</span></h2><pre><code>request(baseurl)
+    .delete(&#x27;/all-users&#x27;)
+    .send({
+        key_admin: fake_key_admin
+    })
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).not.to.be.equal(200);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should delete currently authenticated user successfully with valid authorization<span class="duration">2ms</span></h2><pre><code>request(baseurl)
+    .delete(&#x27;/users&#x27;)
+    .set(&#x27;Authorization&#x27;, token)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.body).not.to.be.null;
+        expect(res.body.message).to.be.equal(&#x22;User deleted with success!&#x22;);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should fail to delete user which is already deleted or do not exist<span class="duration">3ms</span></h2><pre><code>request(baseurl)
+    .delete(&#x27;/users&#x27;)
+    .set(&#x27;Authorization&#x27;, token)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).not.to.be.equal(200);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should fail to get deleted user info<span class="duration">2ms</span></h2><pre><code>request(baseurl)
+    .get(&#x27;/users&#x27;)
+    .set(&#x27;Authorization&#x27;, token)            
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).not.to.be.equal(200);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test fail"><h2>should fail to create new user in case of invalid credentials</h2><pre><code>request(baseurl)
+    .post(&#x27;/users&#x27;)
+    .send({
+        name: &#x27;&#x27;,
+        email: &#x27;ahmedbadra&#x27;,
+        password: &#x27;&#x27;
+    })
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).not.to.be.equal(200);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre><pre class="error">AssertionError: expected 200 to not equal 200
+    at Test.&#x3C;anonymous&#x3E; (tests/APItesting.js:394:54)
+    at Test.assert (node_modules/supertest/lib/test.js:172:8)
+    at localAssert (node_modules/supertest/lib/test.js:120:14)
+    at /home/badra022/Desktop/Siemens software diploma/testing-task/API-testing/node_modules/supertest/lib/test.js:125:7
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /home/badra022/Desktop/Siemens software diploma/testing-task/API-testing/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.&#x3C;anonymous&#x3E; (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:526:35)
+    at endReadableNT (node:internal/streams/readable:1359:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)</pre></li><li class="test fail"><h2>should fail to create new user in case of missing credentials</h2><pre><code>request(baseurl)
+    .post(&#x27;/users&#x27;)
+    .send({
+        name: &#x27;ahmed&#x27;,
+        password: &#x27;sdafsfdgd&#x27;
+    })
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).not.to.be.equal(200);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre><pre class="error">AssertionError: expected 200 to not equal 200
+    at Test.&#x3C;anonymous&#x3E; (tests/APItesting.js:414:54)
+    at Test.assert (node_modules/supertest/lib/test.js:172:8)
+    at localAssert (node_modules/supertest/lib/test.js:120:14)
+    at /home/badra022/Desktop/Siemens software diploma/testing-task/API-testing/node_modules/supertest/lib/test.js:125:7
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /home/badra022/Desktop/Siemens software diploma/testing-task/API-testing/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.&#x3C;anonymous&#x3E; (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:526:35)
+    at endReadableNT (node:internal/streams/readable:1359:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)</pre></li><li class="test pass fast"><h2>should delete all users successfully using valid admin key<span class="duration">4ms</span></h2><pre><code>request(baseurl)
+    .delete(&#x27;/all-users&#x27;)
+    .send({
+        key_admin: key_admin
+    })
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.body).not.to.be.null;
+        expect(res.body.message).to.be.equal(&#x22;Users deleted with success&#x22;);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li><li class="test pass fast"><h2>should fail to delete all users in case of missing admin key<span class="duration">2ms</span></h2><pre><code>request(baseurl)
+    .delete(&#x27;/all-users&#x27;)
+    .set(&#x27;Accept&#x27;, &#x27;application/json&#x27;)
+    .set(&#x27;content-type&#x27;, &#x27;application/json&#x27;)
+    .end(function(err, res) {
+        expect(res.statusCode).not.to.be.equal(200);
+        if(err){
+            throw err;
+        }
+        done();
+    })</code></pre></li></ul></li></ul>
+        </div>
+        <script>
+        function hideSuitesWithout(className) {
+    var suites = document.querySelectorAll('#report > .suite');
+
+    for (var i = 0; i < suites.length; i++) {
+        let suite = suites[i];
+
+        var els = suite.getElementsByClassName(className);
+        if (!els.length) {
+            suite.classList.add('hidden');
+        }
+    }
+}
+
+function unhide() {
+    var suites = document.getElementsByClassName('suite hidden');
+
+    while (suites.length) {
+        suites[0].classList.remove('hidden');
+    }
+}
+
+function togglePasses() {
+    var report = document.getElementById('report');
+
+    report.classList.toggle('hide-passes');
+
+    if (report.classList.contains('hide-passes')) {
+        hideSuitesWithout('test fail');
+    } else {
+        unhide();
+    }
+}
+
+document.getElementById('toggle-passes').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    this.classList.toggle('checked');
+
+    togglePasses();
+});
+
+var tests = document.getElementsByClassName('test');
+
+for (var i = 0; i < tests.length; i++) {
+    var elem = tests[i];
+    var head = elem.children[0];
+
+    head.onclick = function () {
+        var code = this.parentElement.children[1];
+        var display = code.style.display;
+
+        if (display && display === 'block') {
+            code.style.display = 'none';
+        } else {
+            code.style.display = 'block';
+        }
+    };
+}
+        </script>
+    </body>
+</html>
