@@ -47,7 +47,7 @@ number of errors shown upon <br/>attempting to submit is not correct | expected 
 number of errors shown upon <br/>attempting to submit is not correct | expected to show 2 errors, result is 1 error | **subject heading**: selected <br/> **email**: empty or invalid <br/> **order Reference**: written <br/> **file**: Not selected <br/> **message**: empty
 number of errors shown upon <br/>attempting to submit is not correct | expected to show 3 errors, result is 1 error | **subject heading**: Not selected <br/> **email**: invalid input <br/> **order Reference**: written <br/> **file**: Not selected <br/> **message**: empty
 
-## 1. Testing the APIs that [mock-user-auth](https://github.com/thiagoluiznunes/mock-user-auth) provides
+## 2. Testing the APIs that [mock-user-auth](https://github.com/thiagoluiznunes/mock-user-auth) provides
 
 this part tests all API routes of the module mock-user-auth using [supertest](https://www.npmjs.com/package/supertest), used [chai](https://www.npmjs.com/package/chai) for assertions and [mocha](https://www.npmjs.com/package/mocha) for running tests and generating html report
 
@@ -68,3 +68,11 @@ npm run test
 ```
 
 > **NOTE**: make sure to have ```Node.js >= v18 and npm >= v9```
+
+### Bug Tickets
+
+API | description | resulting and expected behaviour
+--- | --- | ---
+```GET app/v1/users``` | password is not hashed in the server side | expected password of user info returned to not equal user actual password, but it does
+```CREATE app/v1/users``` | api accepts invalid data | expected statusCode of 400 when passing an empty email or empty password, but got 200
+```CREATE app/v1/users``` | api accepts incomplete required data | expected statusCode of 400 when missing email or password in the request, but got 200
