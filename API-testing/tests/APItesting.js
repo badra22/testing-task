@@ -117,7 +117,7 @@ describe('mock-user-auth API tests', () => {
     it('should get currently authenticated user info successfully and correctly', (done) => {
         request(baseurl)
             .get('/users')
-            .set('Authorization', token)            
+            .set('Authorization', token)
             .set('content-type', 'application/json')
             .end(function(err, res) {
                 expect(res.statusCode).to.be.equal(200);
@@ -257,7 +257,7 @@ describe('mock-user-auth API tests', () => {
             })
     })
 
-    it('should get the latest updated info of currently authenticated user correctly', (done) => {
+    it('should get the latest updated info of currently authenticated user correctly, not the outdated info', (done) => {
         // reAuthenticate the user
         request(baseurl)
             .post('/auth')
@@ -288,22 +288,6 @@ describe('mock-user-auth API tests', () => {
                         done();
                     });
             });
-    })
-
-    it('should delete currently authenticated user successfully with valid authorization', (done) => {
-        request(baseurl)
-            .delete('/users')
-            .set('Authorization', token)
-            .set('content-type', 'application/json')
-            .end(function(err, res) {
-                expect(res.statusCode).to.be.equal(200);
-                expect(res.body).not.to.be.null;
-                expect(res.body.message).to.be.equal("User deleted with success!");
-                if(err){
-                    throw err;
-                }
-                done();
-            })
     })
 
     it('should fail to delete user with invalid authorization', (done) => {
@@ -350,7 +334,38 @@ describe('mock-user-auth API tests', () => {
             })
     })
 
-    it('should fail to get deleted user info with valid authorization', (done) => {
+    it('should delete currently authenticated user successfully with valid authorization', (done) => {
+        request(baseurl)
+            .delete('/users')
+            .set('Authorization', token)
+            .set('content-type', 'application/json')
+            .end(function(err, res) {
+                expect(res.statusCode).to.be.equal(200);
+                expect(res.body).not.to.be.null;
+                expect(res.body.message).to.be.equal("User deleted with success!");
+                if(err){
+                    throw err;
+                }
+                done();
+            })
+    })
+
+    it('should fail to delete user which is already deleted or do not exist', (done) => {
+        request(baseurl)
+            .delete('/users')
+            .set('Authorization', token)
+            .set('content-type', 'application/json')
+            .end(function(err, res) {
+                expect(res.statusCode).not.to.be.equal(200);
+                if(err){
+                    throw err;
+                }
+                done();
+            })
+    })
+
+
+    it('should fail to get deleted user info', (done) => {
         request(baseurl)
             .get('/users')
             .set('Authorization', token)            
@@ -423,7 +438,7 @@ describe('mock-user-auth API tests', () => {
             })
     })
 
-    it('should fail to delete all users in case of invalid admin key', (done) => {
+    it('should fail to delete all users in case of missing admin key', (done) => {
         request(baseurl)
             .delete('/all-users')
             .set('Accept', 'application/json')

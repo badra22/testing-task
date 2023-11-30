@@ -3,7 +3,7 @@ module.exports = {
         browser.page.contact_us()
             .navigate()
     },
-    'contact-us form should started properly without alerts and accessible to the user'(browser) {
+    'contact-us form should be started properly without alerts and accessible to the user'(browser) {
 
         browser.page.contact_us()
             .assert.title('Contact us - My Store')
@@ -55,7 +55,7 @@ module.exports = {
             .expect.elements('@errorText').count.to.be.equal(2)
     },
 
-    'should fail to submit if user only enters invalid email, display 3 errors (3 required fields, 2 missing and 1 invalid)' (browser) {
+    'should fail to submit if user only enters invalid email, display 3 errors (2 missing fields and 1 invalid field)' (browser) {
 
         browser.page.contact_us()
             .setValue('@email', 'ahmed.mohamed@gmail')
