@@ -1,6 +1,6 @@
 # Technical testing Task
 
-[![CircleCI](https://circleci.com/gh/cci-crs9f/testing-task.svg?style=svg)](https://circleci.com/gh/cci-crs9f/testing-task)
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/HvPkuAuq1E6vNmvP1rDP89/GRm8hzjUfDkrsVrD4hzQNE/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/HvPkuAuq1E6vNmvP1rDP89/GRm8hzjUfDkrsVrD4hzQNE/tree/main)
 
 ## 1. Testing the UI of [this](http://automationpractice.multiformis.com/) website
 
